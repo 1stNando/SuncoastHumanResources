@@ -79,26 +79,34 @@ namespace SuncoastHumanResources
                 else
                 if (choice == "D")
                 {
+                    //THIS IS DELETE - out of (CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     Console.WriteLine("DELETE");
                     //get employee name
                     var nameToSearchFor = PromptForString("What name are you looking for? ");
 
                     //Search database to see if they exist!
                     Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
-                    //If we found an employee
-                    if (foundEmployee != null)
+                    //If we did not find an employee
+                    if (foundEmployee == null)
                     {
 
+                        //If we found an employee
 
-                        // - We did find the employee
+                        //Show that the person doesn't exist
+                        Console.WriteLine("No such employee! ");
+                    }
+                    else
+                    {    // - We did find the employee
                         // Show details
                         Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary} ");
+
                         // - Ask to confirm "Are you sure you want to delete them?
                         var confirm = PromptForString("Are you sure? [Y/N] ").ToUpper();
                         // - If they say no
-                        if (confirm == "N")
+                        if (confirm == "Y")
                         {
-                            //    -do nothing
+                            //Delete them. This part could be left out
+                            employees.Remove(foundEmployee);
 
                         }
                         else
@@ -107,80 +115,82 @@ namespace SuncoastHumanResources
                             //  -Delete them
                             employees.Remove(foundEmployee);
                         }
-
-
-                    //otherwise
-                        else
-                        {
-                            //Show that the person doesn't exist
-                            Console.WriteLine("No such employee! ");
-                        }
                     }
-
-                    else
-                    if (choice == "F")
-                    {
-                        Console.WriteLine("FINDING");
-                        // - Create a varialbe named **'foundEmployee'**  null value
-                        Employee foundEmployee = null;
-
-                        // Prompt for the name
-                        var nameToSearchFor = PromptForString("What name are you looking for? ");
-                        //Show the use of LINQ method shortcut style to search for something.!SUPERPOWER.!!!!!!
-                        Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
-
-                        /*/Loop through the list to look for a match
-                        foreach (var employee in employees)
-                        {
-                            //If we find one, update 'foundEmployee'
-                            if (employee.Name == nameToSearchFor)
-                            {
-                                foundEmployee = employee;
-                            }
-                        }*///the above is no longer need this look when we utilize LINQ method FirstOrDefault().
-
-                        //After the loop, 'foundEmployee' is either 'null' (not found) or refers to the matching item
-                        if (foundEmployee == null)
-                        {
-                            Console.WriteLine("No such person!");
-                        }
-                        //Show a message if 'null', otherwise show the details.
-
-
-                    }
-
-                    else//the following adds Show employee 
-                if (choice == "S")
-                    {
-                        // READ(out of CREATE - READ - UPDATE - DELETE)
-                        foreach (var employee in employees)
-                        {
-                            Console.WriteLine($"{employee.Name} is in department {employee.Department} and makes ${employee.Salary}");
-                        }
-                    }
-                    else
-                    {
-
-                        //Make a new employee object
-
-                        //Prompt for values and save them in the employee's properties
-                        employee.Name = PromptForString("What is your name? ");
-                        employee.Department = PromptForInteger("What is your department number? ");
-                        employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");
-
-                        Console.WriteLine($"Hello, {employee.Name} you make {employee.MonthlySalary()} dollars per month.");
-
-                        // Add it to the list
-                        employees.Add(employee);
-                    }
-                    // end of the 'while' statement
                 }
 
+                else
+                    if (choice == "F")
+                {
+                    Console.WriteLine("FINDING");
+                    // - Create a varialbe named **'foundEmployee'**  null value
+                    Employee foundEmployee = null;
+
+                    // Prompt for the name
+                    var nameToSearchFor = PromptForString("What name are you looking for? ");
+                    //Show the use of LINQ method shortcut style to search for something.!SUPERPOWER.!!!!!!
+                    Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
+
+                    /*/Loop through the list to look for a match
+                    foreach (var employee in employees)
+                    {
+                        //If we find one, update 'foundEmployee'
+                        if (employee.Name == nameToSearchFor)
+                        {
+                            foundEmployee = employee;
+                        }
+                    }*///the above is no longer need this look when we utilize LINQ method FirstOrDefault().
+
+                    //After the loop, 'foundEmployee' is either 'null' (not found) or refers to the matching item
+                    if (foundEmployee == null)
+                    {
+                        Console.WriteLine("No such person!");
+                    }
+                    //Show a message if 'null', otherwise show the details.
 
 
+                }
+
+                else//the following adds Show employee 
+                if (choice == "S")
+                {
+                    // READ(out of CREATE - READ - UPDATE - DELETE)
+                    foreach (var employee in employees)
+                    {
+                        Console.WriteLine($"{employee.Name} is in department {employee.Department} and makes ${employee.Salary}");
+                    }
+                }
+                else
+                if (choice == "A")
+                {
+                    //CREATE (out of CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    //Make a new employee object
+                    var employee = new Employee();
+
+                    //Prompt for values and save them in the employee's properties
+                    employee.Name = PromptForString("What is your name? ");
+                    employee.Department = PromptForInteger("What is your department number? ");
+                    employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");
+
+                    Console.WriteLine($"Hello, {employee.Name} you make {employee.MonthlySalary()} dollars per month.");
+
+                    // Add it to the list
+                    employees.Add(employee);
 
 
-                //end of Main
+                  else
+                    {
+                        Console.WriteLine("Nope! ");
+                    }
+                }
+
+                // end of the 'while' statement
             }
+
+
+
+
+
+            //end of Main
         }
     }
+}
