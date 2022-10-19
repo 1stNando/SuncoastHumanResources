@@ -68,7 +68,7 @@ namespace SuncoastHumanResources
             {
                 //Insert a blank line then promt them and get their answer (force uppercase)
                 Console.WriteLine();
-                Console.Write("What do you want to do?\n(A)dd an employee\n(D)elete an employee\n(F)ind an employee\n(S)how all the employees\n(Q)uit\n:");
+                Console.Write("What do you want to do?\n(A)dd an employee\n(D)elete an employee\n(F)ind an employee\n(F)ind an employee\n(S)how all the employees\n(Q)uit\n:");
                 var choice = Console.ReadLine().ToUpper();
 
                 if (choice == "Q")
@@ -80,7 +80,7 @@ namespace SuncoastHumanResources
                 if (choice == "D")
                 {
                     //THIS IS DELETE - out of (CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    Console.WriteLine("DELETE");
+
                     //get employee name
                     var nameToSearchFor = PromptForString("What name are you looking for? ");
 
@@ -89,9 +89,6 @@ namespace SuncoastHumanResources
                     //If we did not find an employee
                     if (foundEmployee == null)
                     {
-
-                        //If we found an employee
-
                         //Show that the person doesn't exist
                         Console.WriteLine("No such employee! ");
                     }
@@ -121,24 +118,13 @@ namespace SuncoastHumanResources
                 else
                     if (choice == "F")
                 {
-                    Console.WriteLine("FINDING");
-                    // - Create a varialbe named **'foundEmployee'**  null value
-                    Employee foundEmployee = null;
-
                     // Prompt for the name
                     var nameToSearchFor = PromptForString("What name are you looking for? ");
+                    // - Create a varialbe named **'foundEmployee'**  null value
                     //Show the use of LINQ method shortcut style to search for something.!SUPERPOWER.!!!!!!
                     Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
 
-                    /*/Loop through the list to look for a match
-                    foreach (var employee in employees)
-                    {
-                        //If we find one, update 'foundEmployee'
-                        if (employee.Name == nameToSearchFor)
-                        {
-                            foundEmployee = employee;
-                        }
-                    }*///the above is no longer need this look when we utilize LINQ method FirstOrDefault().
+
 
                     //After the loop, 'foundEmployee' is either 'null' (not found) or refers to the matching item
                     if (foundEmployee == null)
@@ -159,6 +145,10 @@ namespace SuncoastHumanResources
                         Console.WriteLine($"{employee.Name} is in department {employee.Department} and makes ${employee.Salary}");
                     }
                 }
+                else if (choice == "U")
+                {
+                    Console.WriteLine("UPDATING!");
+                }
                 else
                 if (choice == "A")
                 {
@@ -171,26 +161,23 @@ namespace SuncoastHumanResources
                     employee.Department = PromptForInteger("What is your department number? ");
                     employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");
 
-                    Console.WriteLine($"Hello, {employee.Name} you make {employee.MonthlySalary()} dollars per month.");
-
                     // Add it to the list
                     employees.Add(employee);
-
-
-                  else
-                    {
-                        Console.WriteLine("Nope! ");
-                    }
                 }
 
-                // end of the 'while' statement
+                else
+                {
+                    Console.WriteLine("Nope! ");
+                }
             }
 
-
-
-
-
-            //end of Main
+            // end of the 'while' statement
         }
+
+
+
+
+
+        //end of Main
     }
 }
