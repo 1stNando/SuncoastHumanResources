@@ -147,37 +147,79 @@ namespace SuncoastHumanResources
                 }
                 else if (choice == "U")
                 {
-                    Console.WriteLine("UPDATING!");
-                }
+                    //Get the employee name we are searching for
+                    var nameToSearchFor = PromptForString("What name are you looking for? ");
+
+                    //Search the database to see if they exist!
+                    Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
+
+                    //If we did not find them..
+                    if (foundEmployee == null)
+                    {
+                        Console.WriteLine("No such employee found.");
+                    }
+
+                    else
+                    {
+                        //Ask for the name to search fo
+                        Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
+
+                        var changeChoice = PromptForString("What do you want to change [Name/Department/Salary]? ").ToUpper();
+
+                        if (changeChoice == "NAME")
+                        {
+                            foundEmployee.Name = PromptForString("What is the new name? ");
+                        }
+                        if (changeChoice == "DEPARTMENT")
+                        {
+                            //Prompt for a new department
+                            foundEmployee.Salary = PromptForInteger("What is the new department? ");
+                        }
+                        if (changeChoice == "SALARY")
+                        {
+                            foundEmployee.Salary = PromptForInteger("What is the new salary? ");
+                        }
+
+
+                        //  --What do we want to change?
+                        //    -if name
+                        //      -prompt for new name
+                        //    -if department
+                        //       -prompt for a new department
+                        //    -if salary
+                        //      --prompt for new salary
+                        // If we don't find them
+                        //  - show message
+                    }
                 else
                 if (choice == "A")
-                {
-                    //CREATE (out of CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    //Make a new employee object
-                    var employee = new Employee();
+                    {
+                        //CREATE (out of CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        //Make a new employee object
+                        var employee = new Employee();
 
-                    //Prompt for values and save them in the employee's properties
-                    employee.Name = PromptForString("What is your name? ");
-                    employee.Department = PromptForInteger("What is your department number? ");
-                    employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");
+                        //Prompt for values and save them in the employee's properties
+                        employee.Name = PromptForString("What is your name? ");
+                        employee.Department = PromptForInteger("What is your department number? ");
+                        employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");
 
-                    // Add it to the list
-                    employees.Add(employee);
+                        // Add it to the list
+                        employees.Add(employee);
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("Nope! ");
+                    }
                 }
 
-                else
-                {
-                    Console.WriteLine("Nope! ");
-                }
+                // end of the 'while' statement
             }
 
-            // end of the 'while' statement
+
+
+
+
+            //end of Main
         }
-
-
-
-
-
-        //end of Main
     }
-}
