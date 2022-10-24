@@ -55,9 +55,6 @@ namespace SuncoastHumanResources
         {
             //first ability added, allows creation of NEW List of employeeS.
             var employees = new List<Employee>();
-
-
-
             DisplayGreeting();
 
             //Should we keep showing the menu?      ????????????
@@ -92,28 +89,28 @@ namespace SuncoastHumanResources
                         //Show that the person doesn't exist
                         Console.WriteLine("No such employee! ");
                     }
+                    //If we found an employee
                     else
-                    {    // - If we did indeed find the employee,
-                        // Show details
-                        Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary} ");
-
-                        // - Ask to confirm "Are you sure you want to delete them?
+                    {
+                        // - We did find the employee
+                        // - Show the details
+                        Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
+                        // - Ask to confirm
                         var confirm = PromptForString("Are you sure? [Y/N] ").ToUpper();
-                        // - If they say yes
                         if (confirm == "Y")
                         {
-
+                            //Delete them
                             employees.Remove(foundEmployee);
                         }
                     }
                 }
 
-                else//this is the FIND employee functionality
-                    if (choice == "F")
+
+                //this is the FIND employee functionality
+                else if (choice == "F")
                 {
                     // Prompt for the name
                     var nameToSearchFor = PromptForString("What name are you looking for? ");
-                    // - Create a varialbe named **'foundEmployee'**  null value
                     //Show the use of LINQ method shortcut style to search for something.!SUPERPOWER.!!!!!!
                     Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
 
