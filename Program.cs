@@ -60,7 +60,7 @@ namespace SuncoastHumanResources
 
             DisplayGreeting();
 
-            //Should we keep showing the menu?
+            //Should we keep showing the menu?      ????????????
             var keepGoing = true;
 
             //While the user hasn't said QUIT yet..
@@ -68,7 +68,7 @@ namespace SuncoastHumanResources
             {
                 //Insert a blank line then promt them and get their answer (force uppercase)
                 Console.WriteLine();
-                Console.Write("What do you want to do?\n(A)dd an employee\n(D)elete an employee\n(F)ind an employee\n(F)ind an employee\n(S)how all the employees\n(Q)uit\n:");
+                Console.Write("What do you want to do?\n(A)dd an employee\n(D)elete an employee\n(F)ind an employee\n(U)pdate an employee\n(S)how all the employees\n(Q)uit\n:");
                 var choice = Console.ReadLine().ToUpper();
 
                 if (choice == "Q")
@@ -93,29 +93,22 @@ namespace SuncoastHumanResources
                         Console.WriteLine("No such employee! ");
                     }
                     else
-                    {    // - We did find the employee
+                    {    // - If we did indeed find the employee,
                         // Show details
                         Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary} ");
 
                         // - Ask to confirm "Are you sure you want to delete them?
                         var confirm = PromptForString("Are you sure? [Y/N] ").ToUpper();
-                        // - If they say no
+                        // - If they say yes
                         if (confirm == "Y")
                         {
-                            //Delete them. This part could be left out
-                            employees.Remove(foundEmployee);
 
-                        }
-                        else
-                        {
-                            //If they say yes
-                            //  -Delete them
                             employees.Remove(foundEmployee);
                         }
                     }
                 }
 
-                else
+                else//this is the FIND employee functionality
                     if (choice == "F")
                 {
                     // Prompt for the name
@@ -124,16 +117,17 @@ namespace SuncoastHumanResources
                     //Show the use of LINQ method shortcut style to search for something.!SUPERPOWER.!!!!!!
                     Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
 
-
-
                     //After the loop, 'foundEmployee' is either 'null' (not found) or refers to the matching item
                     if (foundEmployee == null)
                     {
                         Console.WriteLine("No such person!");
                     }
-                    //Show a message if 'null', otherwise show the details.
-
-
+                    else
+                    {
+                        //Show a message if 'null', 
+                        //otherwise show the details.
+                        Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
+                    }
                 }
 
                 else//the following adds Show employee 
@@ -145,81 +139,81 @@ namespace SuncoastHumanResources
                         Console.WriteLine($"{employee.Name} is in department {employee.Department} and makes ${employee.Salary}");
                     }
                 }
-                else if (choice == "U")
+
+                else
+                if (choice == "U")
                 {
+                    //UPDATE - from CREATE, READ, UPDATE, DELETE!!!!!!!!!!!!!!!!!!
+                    Console.WriteLine("UPDATING!");
                     //Get the employee name we are searching for
                     var nameToSearchFor = PromptForString("What name are you looking for? ");
 
                     //Search the database to see if they exist!
                     Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
 
-                    //If we did not find them..
+                    // If we did NOT find anyone
                     if (foundEmployee == null)
                     {
-                        Console.WriteLine("No such employee found.");
+                        //Show that the person doesn't exist
+                        Console.WriteLine("No such employee! ");
                     }
-
+                    //If we found an employee
                     else
                     {
-                        //Ask for the name to search fo
                         Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
+                        var changeChoice = PromptForString("What do you want to change [(N)ame/(D)epartment/(S)alary]?").ToUpper();
 
-                        var changeChoice = PromptForString("What do you want to change [Name/Department/Salary]? ").ToUpper();
-
-                        if (changeChoice == "NAME")
+                        // --What do we want to change?
+                        //  -if name
+                        if (changeChoice == "N")
                         {
+                            //  -prompt for a new name
                             foundEmployee.Name = PromptForString("What is the new name? ");
                         }
-                        if (changeChoice == "DEPARTMENT")
+                        //  -if the department
+                        if (changeChoice == "D")
                         {
-                            //Prompt for a new department
-                            foundEmployee.Salary = PromptForInteger("What is the new department? ");
+                            //  -Prompt for a new department
+                            foundEmployee.Department = PromptForInteger("What is the new department? ");
                         }
-                        if (changeChoice == "SALARY")
+                        //  -if salary
+                        if (changeChoice == "S")
                         {
+                            //  -prompt for new salary
                             foundEmployee.Salary = PromptForInteger("What is the new salary? ");
                         }
 
 
-                        //  --What do we want to change?
-                        //    -if name
-                        //      -prompt for new name
-                        //    -if department
-                        //       -prompt for a new department
-                        //    -if salary
-                        //      --prompt for new salary
-                        // If we don't find them
-                        //  - show message
-                    }
-                else
-                if (choice == "A")
-                    {
-                        //CREATE (out of CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        //Make a new employee object
-                        var employee = new Employee();
-
-                        //Prompt for values and save them in the employee's properties
-                        employee.Name = PromptForString("What is your name? ");
-                        employee.Department = PromptForInteger("What is your department number? ");
-                        employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");
-
-                        // Add it to the list
-                        employees.Add(employee);
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("Nope! ");
                     }
                 }
 
-                // end of the 'while' statement
-            }
+                else
+                if (choice == "A")
+                {
+                    //CREATE (out of CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!(otherwise called "Add a person")
+                    //Make a new employee object
+                    var employee = new Employee();
+
+                    //Prompt for values and save them in the employee's properties
+                    employee.Name = PromptForString("What is your name? ");
+                    employee.Department = PromptForInteger("What is your department number? ");
+                    employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");
+
+                    // Add it to the list
+                    employees.Add(employee);
+                }
+
+                else
+                {
+                    Console.WriteLine("Nope! ");
+                }
+
+            }// end of the 'while' statement
 
 
 
 
+        }//end of Main
+    }//end of PROGRAM
+}//end of Mainspace
 
-            //end of Main
-        }
-    }
