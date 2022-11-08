@@ -82,11 +82,16 @@ namespace SuncoastHumanResources
                     var nameToSearchFor = PromptForString("What name are you looking for? ");
 
                     //Search database to see if they exist!
-                    //
                     Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
 
                     //If we did not find an employee
-                    if (foundEmployee != null)
+                    if (foundEmployee == null)
+                    {
+                        //Show that the person doesn't exist
+                        Console.WriteLine("No such employee! ");
+                    }
+
+                    else
                     {
                         // - Show the details
                         Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
@@ -105,11 +110,6 @@ namespace SuncoastHumanResources
                             employees.Remove(foundEmployee);
                         }
 
-                        else
-                        {
-                            //Show that the person doesn't exist
-                            Console.WriteLine("No such employee! ");
-                        }
                     }
                 }
 
