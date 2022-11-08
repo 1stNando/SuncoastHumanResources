@@ -82,25 +82,33 @@ namespace SuncoastHumanResources
                     var nameToSearchFor = PromptForString("What name are you looking for? ");
 
                     //Search database to see if they exist!
+                    //
                     Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
+
                     //If we did not find an employee
-                    if (foundEmployee == null)
+                    if (foundEmployee != null)
                     {
-                        //Show that the person doesn't exist
-                        Console.WriteLine("No such employee! ");
-                    }
-                    //If we found an employee
-                    else
-                    {
-                        // - We did find the employee
                         // - Show the details
                         Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
                         // - Ask to confirm
                         var confirm = PromptForString($"Are you sure you want to delete {foundEmployee.Name}? [Y/N] ").ToUpper();
-                        if (confirm == "Y")
+
+                        if (confirm == "N")
+                        {
+                            //do nothing
+                            Console.WriteLine($"Ok, not doing anything to {foundEmployee}");
+                        }
+
+                        else if (confirm == "Y")
                         {
                             //Delete them
                             employees.Remove(foundEmployee);
+                        }
+
+                        else
+                        {
+                            //Show that the person doesn't exist
+                            Console.WriteLine("No such employee! ");
                         }
                     }
                 }
