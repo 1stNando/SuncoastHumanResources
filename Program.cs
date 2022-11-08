@@ -96,7 +96,7 @@ namespace SuncoastHumanResources
                         // - Show the details
                         Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
                         // - Ask to confirm
-                        var confirm = PromptForString("Are you sure? [Y/N] ").ToUpper();
+                        var confirm = PromptForString($"Are you sure you want to delete {foundEmployee.Name}? [Y/N] ").ToUpper();
                         if (confirm == "Y")
                         {
                             //Delete them
@@ -202,7 +202,7 @@ namespace SuncoastHumanResources
 
                 else
                 {
-                    Console.WriteLine("Nope! ");
+                    Console.WriteLine("Nope! Not an option... ");
                 }
 
             }// end of the 'while' statement
