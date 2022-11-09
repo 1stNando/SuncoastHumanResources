@@ -86,7 +86,7 @@ namespace SuncoastHumanResources
         static void Main(string[] args)
         {
             //first ability added, allows creation of NEW List of employeeS.
-            var employees = new List<Employee>();
+            var database = new List<Employee>();
             DisplayGreeting();
 
             //Should we keep showing the menu?      ????????????
