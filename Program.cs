@@ -37,7 +37,8 @@ namespace SuncoastHumanResources
         //also READ Find one emp.
         public Employee FindOneEmployee(string nameToFind)
         {
-            Employee foundEmployee = Employees.FirstOrDefault(employee => employee.Name == nameToFind);
+            //Updated to be able to search either by first or last name! Via nameToFind.
+            Employee foundEmployee = Employees.FirstOrDefault(employee => employee.Name.Contains(nameToFind));
             return foundEmployee;
         }
         //Delete Employee 
@@ -45,6 +46,8 @@ namespace SuncoastHumanResources
         {
             Employees.Remove(employeeToDelete);
         }
+
+        //We do not need UPDATE 
     }
 
     class Program
