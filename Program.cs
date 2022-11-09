@@ -114,7 +114,7 @@ namespace SuncoastHumanResources
                     var nameToSearchFor = PromptForString("What name are you looking for? ");
 
                     //Search database to see if they exist!
-                    Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
+                    Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
 
                     //If we did not find an employee
                     if (foundEmployee == null)
