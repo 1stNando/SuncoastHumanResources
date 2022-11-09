@@ -15,6 +15,38 @@ namespace SuncoastHumanResources
         }
     }
 
+    class EmployeeDatabase
+    {
+        //Create our first private database, other people do not have access to this information by default. 
+        private List<Employee> Employees { get; set; } = new List<Employee>();
+
+        //Below we will write the different behaviors we want this class to do.
+
+        //CREATE Add Employee. We make this public because we want other users to be able to add new people. 
+        public void AddEmployee(Employee newEmployee)
+        {
+            //this right here is the "behavior" we want
+            Employees.Add(newEmployee);
+        }
+
+        //READ Get all employee
+        public List<Employee> GetAllEmployees()
+        {
+            return Employees;
+        }
+        //also READ Find one emp.
+        public Employee FindOneEmployee(string nameToFind)
+        {
+            Employee foundEmployee = Employees.FirstOrDefault(employee => employee.Name == nameToFind);
+            return foundEmployee;
+        }
+        //Delete Employee 
+        public void DeleteEmployee(Employee employeeToDelete)
+        {
+            Employees.Remove(employeeToDelete);
+        }
+    }
+
     class Program
     {
         static void DisplayGreeting()
