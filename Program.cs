@@ -43,6 +43,8 @@ namespace SuncoastHumanResources
         {
             //first ability added, allows creation of NEW List of employeeS.
             //Update for API. change name to reference database AND change where the List<Employee> was created and instead reference our new EmployeeDatabase(); by calling its method.
+
+            //Make new database
             var database = new EmployeeDatabase();
 
             //show the greeting via method call
@@ -59,183 +61,174 @@ namespace SuncoastHumanResources
                 Console.Write("What do you want to do?\n(A)dd an employee\n(D)elete an employee\n(F)ind an employee\n(U)pdate an employee\n(S)how all the employees\n(Q)uit\n:");
                 var choice = Console.ReadLine().ToUpper();
 
+                //Now lets change this to include SWITCH CASE instead to optimize
 
-                if (choice == "Q")
+                switch (choice)
                 {
                     //They said quit, so set our keepGoing to false
-                    keepGoing = false;
+                    case "Q":
+                        keepGoing = false;
+                        break;
+
+                    case "D":
+                        DeleteEmployee(database);
+                        break;
+
+                    case "F":
+                        ShowEmployee(database);
+                        break;
+
+
+                    case "S":
+                        ShowAllEmployees(database);
+                        break;
+
+                    case "U":
+                        UpdateEmployee(database);
+                        break;
+
+                    case "A":
+                        AddEmployee(database);
+                        break;
+                    default:
+                        Console.WriteLine("Nope! Not an option... ");
+                        break;
+
+                }// end of the 'while' statement
+
+
+
+
+            }//end of Main
+
+            private static void DeleteEmployee(EmployeeDatabase database)
+            {
+                //THIS IS DELETE - out of (CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+                //get employee name
+                var nameToSearchFor = PromptForString("What name are you looking for? ");
+
+                //Search database to see if they exist!
+                Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
+
+                //If we did not find an employee
+                if (foundEmployee == null)
+                {
+                    //Show that the person doesn't exist
+                    Console.WriteLine("No such employee! ");
+                }
+
+                else
+                {
+                    // - Show the details
+                    Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
+                    // - Ask to confirm
+                    var confirm = PromptForString($"Are you sure you want to delete {foundEmployee.Name}? [Y/N] ").ToUpper();
+
+                    if (confirm == "N")
+                    {
+                        //do nothing
+                        Console.WriteLine($"Ok, not doing anything to {foundEmployee}");
+                    }
+
+                    else if (confirm == "Y")
+                    {
+                        //Delete them
+                        database.DeleteEmployee(foundEmployee);
+                    }
+
+                }
+            }
+
+            private static void ShowEmployee(EmployeeDatabase database)
+            {
+                // Prompt for the name
+                var nameToSearchFor = PromptForString("What name are you looking for? ");
+                //Show the use of LINQ method shortcut style to search for something.!SUPERPOWER.!!!!!!
+                Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
+
+                //After the loop, 'foundEmployee' is either 'null' (not found) or refers to the matching item
+                if (foundEmployee == null)
+                {
+                    Console.WriteLine("No such person!");
                 }
                 else
-                if (choice == "D")
                 {
-                    DeleteEmployee(database);
+                    //Show a message if 'null', 
+                    //otherwise show the details.
+                    Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
                 }
+            }
 
+            private static void UpdateEmployee(EmployeeDatabase database)
+            {
+                //UPDATE - from CREATE, READ, UPDATE, DELETE!!!!!!!!!!!!!!!!!!
+                Console.WriteLine("UPDATING!");
+                //Get the employee name we are searching for
+                var nameToSearchFor = PromptForString("What name are you looking for? ");
 
-                //this is the FIND employee functionality
-                else if (choice == "F")
+                //Search the database to see if they exist!
+                Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
+
+                // If we did NOT find anyone
+                if (foundEmployee == null)
                 {
-                    ShowEmployee(database);
+                    //Show that the person doesn't exist
+                    Console.WriteLine("No such employee! ");
                 }
-
-                else//the following adds Show employee 
-                if (choice == "S")
-                {
-                    ShowAllEmployees(database);
-                }
-
-                else
-                if (choice == "U")
-                {
-                    UpdateEmployee(database);
-                }
-
-                else
-                if (choice == "A")
-                {
-                    AddEmployee(database);
-                }
-
+                //If we found an employee
                 else
                 {
-                    Console.WriteLine("Nope! Not an option... ");
+                    Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
+                    var changeChoice = PromptForString("What do you want to change [(N)ame/(D)epartment/(S)alary]?").ToUpper();
+
+                    // --What do we want to change?
+                    //  -if name
+                    if (changeChoice == "N")
+                    {
+                        //  -prompt for a new name
+                        foundEmployee.Name = PromptForString("What is the new name? ");
+                    }
+                    //  -if the department
+                    if (changeChoice == "D")
+                    {
+                        //  -Prompt for a new department
+                        foundEmployee.Department = PromptForInteger("What is the new department? ");
+                    }
+                    //  -if salary
+                    if (changeChoice == "S")
+                    {
+                        //  -prompt for new salary
+                        foundEmployee.Salary = PromptForInteger("What is the new salary? ");
+                    }
+
+
                 }
-
-            }// end of the 'while' statement
-
-
-
-
-        }//end of Main
-
-        private static void DeleteEmployee(EmployeeDatabase database)
-        {
-            //THIS IS DELETE - out of (CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-            //get employee name
-            var nameToSearchFor = PromptForString("What name are you looking for? ");
-
-            //Search database to see if they exist!
-            Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
-
-            //If we did not find an employee
-            if (foundEmployee == null)
-            {
-                //Show that the person doesn't exist
-                Console.WriteLine("No such employee! ");
             }
 
-            else
+            private static void AddEmployee(EmployeeDatabase database)
             {
-                // - Show the details
-                Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
-                // - Ask to confirm
-                var confirm = PromptForString($"Are you sure you want to delete {foundEmployee.Name}? [Y/N] ").ToUpper();
+                //CREATE (out of CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!(otherwise called "Add a person")
+                //Make a new employee object
+                var employee = new Employee();
 
-                if (confirm == "N")
+                //Prompt for values and save them in the employee's properties
+                employee.Name = PromptForString("What is your name? ");
+                employee.Department = PromptForInteger("What is your department number? ");
+                employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");
+
+                // Add it to the list
+                database.AddEmployee(employee);
+            }
+
+            private static void ShowAllEmployees(EmployeeDatabase database)
+            {
+                // READ(out of CREATE - READ - UPDATE - DELETE)
+                foreach (var employee in database.GetAllEmployees())
                 {
-                    //do nothing
-                    Console.WriteLine($"Ok, not doing anything to {foundEmployee}");
+                    Console.WriteLine($"{employee.Name} is in department {employee.Department} and makes ${employee.Salary}");
                 }
-
-                else if (confirm == "Y")
-                {
-                    //Delete them
-                    database.DeleteEmployee(foundEmployee);
-                }
-
             }
-        }
-
-        private static void ShowEmployee(EmployeeDatabase database)
-        {
-            // Prompt for the name
-            var nameToSearchFor = PromptForString("What name are you looking for? ");
-            //Show the use of LINQ method shortcut style to search for something.!SUPERPOWER.!!!!!!
-            Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
-
-            //After the loop, 'foundEmployee' is either 'null' (not found) or refers to the matching item
-            if (foundEmployee == null)
-            {
-                Console.WriteLine("No such person!");
-            }
-            else
-            {
-                //Show a message if 'null', 
-                //otherwise show the details.
-                Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
-            }
-        }
-
-        private static void UpdateEmployee(EmployeeDatabase database)
-        {
-            //UPDATE - from CREATE, READ, UPDATE, DELETE!!!!!!!!!!!!!!!!!!
-            Console.WriteLine("UPDATING!");
-            //Get the employee name we are searching for
-            var nameToSearchFor = PromptForString("What name are you looking for? ");
-
-            //Search the database to see if they exist!
-            Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
-
-            // If we did NOT find anyone
-            if (foundEmployee == null)
-            {
-                //Show that the person doesn't exist
-                Console.WriteLine("No such employee! ");
-            }
-            //If we found an employee
-            else
-            {
-                Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
-                var changeChoice = PromptForString("What do you want to change [(N)ame/(D)epartment/(S)alary]?").ToUpper();
-
-                // --What do we want to change?
-                //  -if name
-                if (changeChoice == "N")
-                {
-                    //  -prompt for a new name
-                    foundEmployee.Name = PromptForString("What is the new name? ");
-                }
-                //  -if the department
-                if (changeChoice == "D")
-                {
-                    //  -Prompt for a new department
-                    foundEmployee.Department = PromptForInteger("What is the new department? ");
-                }
-                //  -if salary
-                if (changeChoice == "S")
-                {
-                    //  -prompt for new salary
-                    foundEmployee.Salary = PromptForInteger("What is the new salary? ");
-                }
-
-
-            }
-        }
-
-        private static void AddEmployee(EmployeeDatabase database)
-        {
-            //CREATE (out of CREATE, READ, UPDATE, DELETE)!!!!!!!!!!!!!!!!!!!!!!!!!!!!(otherwise called "Add a person")
-            //Make a new employee object
-            var employee = new Employee();
-
-            //Prompt for values and save them in the employee's properties
-            employee.Name = PromptForString("What is your name? ");
-            employee.Department = PromptForInteger("What is your department number? ");
-            employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");
-
-            // Add it to the list
-            database.AddEmployee(employee);
-        }
-
-        private static void ShowAllEmployees(EmployeeDatabase database)
-        {
-            // READ(out of CREATE - READ - UPDATE - DELETE)
-            foreach (var employee in database.GetAllEmployees())
-            {
-                Console.WriteLine($"{employee.Name} is in department {employee.Department} and makes ${employee.Salary}");
-            }
-        }
-    }//end of PROGRAM
-}//end of Mainspace
+        }//end of PROGRAM
+    }//end of Mainspace
 
