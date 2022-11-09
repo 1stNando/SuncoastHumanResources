@@ -86,7 +86,10 @@ namespace SuncoastHumanResources
         static void Main(string[] args)
         {
             //first ability added, allows creation of NEW List of employeeS.
-            var database = new List<Employee>();
+            //Update for API. change name to reference database AND change where the List<Employee> was created and instead reference our new EmployeeDatabase(); by calling its method.
+            var database = new EmployeeDatabase();
+
+            //show the greeting via method call
             DisplayGreeting();
 
             //Should we keep showing the menu?      ????????????
@@ -139,7 +142,7 @@ namespace SuncoastHumanResources
                         else if (confirm == "Y")
                         {
                             //Delete them
-                            employees.Remove(foundEmployee);
+                            database.DeleteEmployee(foundEmployee);
                         }
 
                     }
@@ -152,7 +155,7 @@ namespace SuncoastHumanResources
                     // Prompt for the name
                     var nameToSearchFor = PromptForString("What name are you looking for? ");
                     //Show the use of LINQ method shortcut style to search for something.!SUPERPOWER.!!!!!!
-                    Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
+                    Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
 
                     //After the loop, 'foundEmployee' is either 'null' (not found) or refers to the matching item
                     if (foundEmployee == null)
@@ -171,7 +174,7 @@ namespace SuncoastHumanResources
                 if (choice == "S")
                 {
                     // READ(out of CREATE - READ - UPDATE - DELETE)
-                    foreach (var employee in employees)
+                    foreach (var employee in database.GetAllEmployees())
                     {
                         Console.WriteLine($"{employee.Name} is in department {employee.Department} and makes ${employee.Salary}");
                     }
@@ -186,7 +189,7 @@ namespace SuncoastHumanResources
                     var nameToSearchFor = PromptForString("What name are you looking for? ");
 
                     //Search the database to see if they exist!
-                    Employee foundEmployee = employees.FirstOrDefault(employee => employee.Name == nameToSearchFor);
+                    Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
 
                     // If we did NOT find anyone
                     if (foundEmployee == null)
@@ -237,7 +240,7 @@ namespace SuncoastHumanResources
                     employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");
 
                     // Add it to the list
-                    employees.Add(employee);
+                    database.AddEmployee(employee);
                 }
 
                 else
