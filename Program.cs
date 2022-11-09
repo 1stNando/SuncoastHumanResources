@@ -59,6 +59,7 @@ namespace SuncoastHumanResources
                 Console.Write("What do you want to do?\n(A)dd an employee\n(D)elete an employee\n(F)ind an employee\n(U)pdate an employee\n(S)how all the employees\n(Q)uit\n:");
                 var choice = Console.ReadLine().ToUpper();
 
+
                 if (choice == "Q")
                 {
                     //They said quit, so set our keepGoing to false
@@ -129,11 +130,7 @@ namespace SuncoastHumanResources
                 else//the following adds Show employee 
                 if (choice == "S")
                 {
-                    // READ(out of CREATE - READ - UPDATE - DELETE)
-                    foreach (var employee in database.GetAllEmployees())
-                    {
-                        Console.WriteLine($"{employee.Name} is in department {employee.Department} and makes ${employee.Salary}");
-                    }
+                    ShowAllEmployees(database);
                 }
 
                 else
@@ -210,6 +207,15 @@ namespace SuncoastHumanResources
 
 
         }//end of Main
+
+        private static void ShowAllEmployees(EmployeeDatabase database)
+        {
+            // READ(out of CREATE - READ - UPDATE - DELETE)
+            foreach (var employee in database.GetAllEmployees())
+            {
+                Console.WriteLine($"{employee.Name} is in department {employee.Department} and makes ${employee.Salary}");
+            }
+        }
     }//end of PROGRAM
 }//end of Mainspace
 
