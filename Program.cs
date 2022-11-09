@@ -38,7 +38,7 @@ namespace SuncoastHumanResources
         public Employee FindOneEmployee(string nameToFind)
         {
             //Updated to be able to search either by first or last name! Via nameToFind.
-            Employee foundEmployee = Employees.FirstOrDefault(employee => employee.Name.Contains(nameToFind));
+            Employee foundEmployee = Employees.FirstOrDefault(employee => employee.Name.ToUpper().Contains(nameToFind.ToUpper()));
             return foundEmployee;
         }
         //Delete Employee 
