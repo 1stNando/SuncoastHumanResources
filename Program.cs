@@ -84,6 +84,7 @@ namespace SuncoastHumanResources
 
                     case "D":
                         DeleteEmployee(database);
+                        database.SaveEmployees();
                         break;
 
                     case "F":
@@ -97,10 +98,12 @@ namespace SuncoastHumanResources
 
                     case "U":
                         UpdateEmployee(database);
+                        database.SaveEmployees();
                         break;
 
                     case "A":
                         AddEmployee(database);
+                        database.SaveEmployees();
                         break;
                     default:
                         Console.WriteLine("Nope! Not an option... ");
