@@ -15,7 +15,19 @@ namespace SuncoastHumanResources
         //Method to LOAD employees, doesn't return anything just populates Employees List
         public void LoadEmployees()
         {
+            if (File.Exists("employees.csv"))
+            {
+                //Create a READER from employees.csv
+                var fileReader = new StreamReader("employees.csv");
 
+                //Create csvReader off of fileReader
+                var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
+
+                //Replace our BLANK list of employees with the ones that are int the CSV file
+                Employees = csvReader.GetRecords<Employee>().ToList();
+
+                fileReader.Close();
+            }
         }
         //ability to write the Employee list to a file!
         public void SaveEmployees()
