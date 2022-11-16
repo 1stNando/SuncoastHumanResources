@@ -11,14 +11,17 @@ namespace SuncoastHumanResources
         //Create our first private database, other people do not have access to this information by default. 
         private List<Employee> Employees { get; set; } = new List<Employee>();
 
+        //This allows us to make only ONE place where we have to write "employees.csv". This makes much more sense when we consider changing the .csv file to use another one and only have to change the name of the file in one location
+        private string FileName = "employees.csv";
+
 
         //Method to LOAD employees, doesn't return anything just populates Employees List
         public void LoadEmployees()
         {
-            if (File.Exists("employees.csv"))
+            if (File.Exists(FileName))
             {
                 //Create a READER from employees.csv
-                var fileReader = new StreamReader("employees.csv");
+                var fileReader = new StreamReader(FileName);
 
                 //Create csvReader off of fileReader
                 var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
@@ -32,7 +35,7 @@ namespace SuncoastHumanResources
         //ability to write the Employee list to a file!
         public void SaveEmployees()
         {
-            var fileWriter = new StreamWriter("employees.csv");
+            var fileWriter = new StreamWriter(FileName);
 
             var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
