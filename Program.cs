@@ -107,9 +107,10 @@ namespace SuncoastHumanResources
                         break;
 
                 }// end of the 'while' statement
+
+                //One instance at the end of program SAVE Employees
+                database.SaveEmployees();
             }
-            //One instance at the end of program SAVE Employees
-            database.SaveEmployees();
         }//end of Main
 
         private static void DeleteEmployee(EmployeeDatabase database)
