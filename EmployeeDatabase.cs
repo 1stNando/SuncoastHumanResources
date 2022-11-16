@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SuncoastHumanResources
 {
@@ -7,6 +8,18 @@ namespace SuncoastHumanResources
     {
         //Create our first private database, other people do not have access to this information by default. 
         private List<Employee> Employees { get; set; } = new List<Employee>();
+
+
+        //Method to LOAD employees, doesn't return anything just populates Employees List
+        public void LoadEmployees()
+        {
+
+        }
+        //ability to write the Employee list to a file!
+        public void SaveEmployees()
+        {
+            var fileWriter = new StreamWriter("employees.csv");
+        }
 
         //Below we will write the different behaviors we want this class to do.
 

@@ -45,16 +45,6 @@ namespace SuncoastHumanResources
             }
         }
 
-        //Method to LOAD employees, doesn't return anything just populates Employees List
-        public void LoadEmployees()
-        {
-
-        }
-        //ability to write the Employee list to a file!
-        public void SaveEmployees()
-        {
-
-        }
 
 
         static void Main(string[] args)
@@ -63,10 +53,10 @@ namespace SuncoastHumanResources
             //first ability added, allows creation of NEW List of employeeS.
             //Update for API. change name to reference database AND change where the List<Employee> was created and instead reference our new EmployeeDatabase(); by calling its method.
 
-            //Make new database
+            //Make new database to save into
             var database = new EmployeeDatabase();
 
-
+            //Only need one instance at the beginning
             database.LoadEmployees();
 
             //show the greeting via method call
@@ -118,6 +108,7 @@ namespace SuncoastHumanResources
 
                 }// end of the 'while' statement
             }
+            //One instance at the end of program SAVE Employees
             database.SaveEmployees();
         }//end of Main
 
