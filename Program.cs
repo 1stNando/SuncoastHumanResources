@@ -73,7 +73,7 @@ namespace SuncoastHumanResources
                 Console.Write("What do you want to do?\n(A)dd an employee\n(D)elete an employee\n(F)ind an employee\n(U)pdate an employee\n(S)how all the employees\n(Q)uit\n:");
                 var choice = Console.ReadLine().ToUpper();
 
-                //Now lets change this to include SWITCH CASE instead to optimize
+                //Now lets change this to include SWITCH CASE instead to optimize function
 
                 switch (choice)
                 {
@@ -84,6 +84,7 @@ namespace SuncoastHumanResources
 
                     case "D":
                         DeleteEmployee(database);
+                        //This location allows the database to be updated instantly. Even if we abort the program. The location of this save matters in the logic of improving the program.
                         database.SaveEmployees();
                         break;
 
