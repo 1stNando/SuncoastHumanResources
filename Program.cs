@@ -54,9 +54,9 @@ namespace SuncoastHumanResources
             //Update for API. change name to reference database AND change where the List<Employee> was created and instead reference our new EmployeeDatabase(); by calling its method.
 
             //Make new database to save into
-            var database = new EmployeeDatabase();
+            var database = new EmployeeDatabase();//!! important "EmployeeDatabase()" method that references this key Class to where all of our data will be linked to CsvHelper.
 
-            //Only need one instance at the beginning
+            //Only need one instance at the beginning. This method gets the next link in the chain that connects our Class where the CSV reader/writer lives. 
             database.LoadEmployees();
 
             //show the greeting via method call
@@ -65,17 +65,18 @@ namespace SuncoastHumanResources
             //Should we keep showing the menu?      
             var keepGoing = true;
 
-            //While the user hasn't said QUIT yet..
+            //While the user hasn't said QUIT..
             while (keepGoing)
             {
                 //Insert a blank line then promt them and get their answer (force uppercase)
                 Console.WriteLine();
                 Console.Write("What do you want to do?\n(A)dd an employee\n(D)elete an employee\n(F)ind an employee\n(U)pdate an employee\n(S)how all the employees\n(Q)uit\n:");
-                var choice = Console.ReadLine().ToUpper();
+                var choice = Console.ReadLine().ToUpper();//This ReadLine() method is an important pause in the UI, that waits for the user to respond.IMPORTANT//////////////////////////logic
+                //Notice the connection we are able to make using this variable called "choice" to be equal to "ReadLine"() method.Connecting the interface to the user. 
 
                 //Now lets change this to include SWITCH CASE instead to optimize function
 
-                switch (choice)
+                switch (choice)//Key location of the structure for the UI part of the program. /////////////////references into the multiple methods we created under the Class EmployeeDatabase!!!!!!!!!!!!!!!!!!!!!!!!!
                 {
                     //They said quit, so set our keepGoing to false
                     case "Q":
@@ -125,7 +126,8 @@ namespace SuncoastHumanResources
             var nameToSearchFor = PromptForString("What name are you looking for? ");
 
             //Search database to see if they exist!
-            Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
+            Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);/////Important link chain, Employee references our lonely Employee class that sits alone in its own .cs file in this case
+            //super important to understand how this "foundEmployee" variable is utilized to describe a behavior we want to occur in our database. Which ultimately is to find an employee. Allowing us to manipulate/toss around it in conjunction with everything! 
 
             //If we did not find an employee
             if (foundEmployee == null)
@@ -154,38 +156,38 @@ namespace SuncoastHumanResources
                 }
 
             }
-        }
+        }//End of DELETE method that goes into our database.//////////////////////////////////////////void method
 
-        private static void ShowEmployee(EmployeeDatabase database)
+        private static void ShowEmployee(EmployeeDatabase database)/////////////////////////READ from database method.
         {
             // Prompt for the name
             var nameToSearchFor = PromptForString("What name are you looking for? ");
             //Show the use of LINQ method shortcut style to search for something.!SUPERPOWER.!!!!!!
-            Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
+            Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);///////notice how we are once again doing the same thing we did with the method above..
 
             //After the loop, 'foundEmployee' is either 'null' (not found) or refers to the matching item
             if (foundEmployee == null)
-            {
-                Console.WriteLine("No such person!");
+            {   ////Show a message if 'null', 
+                Console.WriteLine("We unfortunately did not find this person in our database! Sorry.");
             }
             else
             {
-                //Show a message if 'null', 
+
                 //otherwise show the details.
                 Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
             }
         }
 
 
-        private static void UpdateEmployee(EmployeeDatabase database)
+        private static void UpdateEmployee(EmployeeDatabase database)/////////////////////////////////////////////////////////////////UPDATE our database method!////////////////////More work. More complex method logic. 
         {
-            //UPDATE - from CREATE, READ, UPDATE, DELETE!!!!!!!!!!!!!!!!!!
+
             Console.WriteLine("UPDATING!");
             //Get the employee name we are searching for
-            var nameToSearchFor = PromptForString("What name are you looking for? ");
+            var nameToSearchFor = PromptForString("What name are you looking for? ");/////////Once again...we are doing the same thing we did to start in the other methods created. 
 
             //Search the database to see if they exist!
-            Employee foundEmployee = database.FindOneEmployee(nameToSearchFor);
+            Employee foundEmployee = database.FindOneEmployee(nameToSearchFor); //Once again.. We are repeating the same process we did on the Delete method above. ///////////////Important///////
 
             // If we did NOT find anyone
             if (foundEmployee == null)
@@ -193,8 +195,9 @@ namespace SuncoastHumanResources
                 //Show that the person doesn't exist
                 Console.WriteLine("No such employee! ");
             }
+
             //If we found an employee
-            else
+            else//IMPORTANT location of the logic in our UI where we tie in everything we created at earlier. Like the methods to describe the behaviors we needed to occur and affect our database.. The End. 
             {
                 Console.WriteLine($"{foundEmployee.Name} is in department {foundEmployee.Department} and makes ${foundEmployee.Salary}");
                 var changeChoice = PromptForString("What do you want to change [(N)ame/(D)epartment/(S)alary]?").ToUpper();
@@ -225,11 +228,11 @@ namespace SuncoastHumanResources
 
         private static void AddEmployee(EmployeeDatabase database)
         {
-            //CREATE (out of CREATE, READ, UPDATE, DELETE)!(otherwise called "Add a person")
+            //CREATE (out of CREATE, READ, UPDATE, DELETE)!(otherwise called "Add a person")//////////////////////////////////////////////////////////////////////////////////////////////
             //Make a new employee object
-            var employee = new Employee();
+            var employee = new Employee();//IMPORTANT to understand how we are INVOKING a new instance of our existing class of Employee.////////////////////////////////////////Remember this link in the chain of logic! 
 
-            //Prompt for values and save them in the employee's properties
+            //Prompt for values and save them in the employee's properties. NOticE how we manipulate the variable employee in order to connect it to the actual Employee class that exists. And the use of a dot followed by the name of the attribute we want to target in our file.
             employee.Name = PromptForString("What is your name? ");
             employee.Department = PromptForInteger("What is your department number? ");
             employee.Salary = PromptForInteger("What is your yearly salary (in dollars)? ");

@@ -67,7 +67,7 @@ namespace SuncoastHumanResources
             return foundEmployee;
         }
         //Delete Employee 
-        public void DeleteEmployee(Employee employeeToDelete)
+        public void DeleteEmployee(Employee employeeToDelete)//???why is the e not capital in employeeToDelete
         {
             Employees.Remove(employeeToDelete);
         }
